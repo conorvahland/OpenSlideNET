@@ -36,7 +36,7 @@ namespace OpenSlideNET
             });
         }
 
-        public static byte[] GetTileAsJpeg(this DeepZoomGenerator dz, int level, int locationX, int locationY, out TileInfo info, int quality = 75)
+        public static byte[] GetTileAsJpeg(this DeepZoomGenerator dz, int level, int locationX, int locationY, out TileInfo info)
         {
             if (dz == null)
             {
@@ -54,7 +54,7 @@ namespace OpenSlideNET
                 {
                     using (var ms = new MemoryStream(buffer))
                     {
-                        image.SaveAsJpeg(ms, new JpegEncoder() { Quality = quality });
+                        image.SaveAsJpeg(ms, new JpegEncoder());
                         ms.SetLength(ms.Position);
                         return ms.ToArray();
                     }
@@ -66,7 +66,7 @@ namespace OpenSlideNET
             }
         }
 
-        public static void GetTileAsJpegToStream(this DeepZoomGenerator dz, int level, int locationX, int locationY, Stream stream, int quality = 75)
+        public static void GetTileAsJpegToStream(this DeepZoomGenerator dz, int level, int locationX, int locationY, Stream stream)
         {
             if (dz == null)
             {
@@ -84,7 +84,7 @@ namespace OpenSlideNET
                 {
                     using (var ms = new MemoryStream(buffer))
                     {
-                        image.SaveAsJpeg(ms, new JpegEncoder() { Quality = quality });
+                        image.SaveAsJpeg(ms, new JpegEncoder());
                         ms.SetLength(ms.Position);
                         ms.Position = 0;
                         ms.CopyTo(stream);
@@ -97,7 +97,7 @@ namespace OpenSlideNET
             }
         }
 
-        public static void GetTileAsJpegToStream(this DeepZoomGenerator dz, int level, int locationX, int locationY, MemoryStream stream, int quality = 75)
+        public static void GetTileAsJpegToStream(this DeepZoomGenerator dz, int level, int locationX, int locationY, MemoryStream stream)
         {
             if (dz == null)
             {
@@ -110,11 +110,11 @@ namespace OpenSlideNET
             {
                 WriteImage(dz, image, tileInfo);
 
-                image.SaveAsJpeg(stream, new JpegEncoder() { Quality = quality });
+                image.SaveAsJpeg(stream, new JpegEncoder());
             }
         }
 
-        public static async Task GetTileAsJpegToStreamAsync(this DeepZoomGenerator dz, int level, int locationX, int locationY, Stream stream, int quality = 75)
+        public static async Task GetTileAsJpegToStreamAsync(this DeepZoomGenerator dz, int level, int locationX, int locationY, Stream stream)
         {
             if (dz == null)
             {
@@ -132,7 +132,7 @@ namespace OpenSlideNET
                 {
                     using (var ms = new MemoryStream(buffer))
                     {
-                        image.SaveAsJpeg(ms, new JpegEncoder() { Quality = quality });
+                        image.SaveAsJpeg(ms, new JpegEncoder());
                         ms.SetLength(ms.Position);
                         ms.Position = 0;
                         await ms.CopyToAsync(stream).ConfigureAwait(false);

@@ -29,7 +29,7 @@ namespace OpenSlideNET
             return dest;
         }
 
-        public static byte[] GetAssociatedImageAsJpeg(this OpenSlideImage image, string name, int quality = 75)
+        public static byte[] GetAssociatedImageAsJpeg(this OpenSlideImage image, string name)
         {
             using (var img = WriteImage(image, name))
             {
@@ -38,7 +38,7 @@ namespace OpenSlideNET
                 {
                     using (var ms = new MemoryStream(buffer))
                     {
-                        img.SaveAsJpeg(ms, new JpegEncoder() { Quality = quality });
+                        img.SaveAsJpeg(ms, new JpegEncoder());
                         ms.SetLength(ms.Position);
                         return ms.ToArray();
                     }
@@ -50,7 +50,7 @@ namespace OpenSlideNET
             }
         }
 
-        public static void GetAssociatedImageAsJpegToStream(this OpenSlideImage image, string name, Stream stream, int quality = 75)
+        public static void GetAssociatedImageAsJpegToStream(this OpenSlideImage image, string name, Stream stream)
         {
             using (var img = WriteImage(image, name))
             {
@@ -59,7 +59,7 @@ namespace OpenSlideNET
                 {
                     using (var ms = new MemoryStream(buffer))
                     {
-                        img.SaveAsJpeg(ms, new JpegEncoder() { Quality = quality });
+                        img.SaveAsJpeg(ms, new JpegEncoder());
                         ms.SetLength(ms.Position);
                         ms.Position = 0;
                         ms.CopyTo(stream);
@@ -72,15 +72,15 @@ namespace OpenSlideNET
             }
         }
 
-        public static void GetAssociatedImageAsJpegToStream(this OpenSlideImage image,string name, MemoryStream stream, int quality = 75)
+        public static void GetAssociatedImageAsJpegToStream(this OpenSlideImage image,string name, MemoryStream stream)
         {
             using (var img = WriteImage(image, name))
             {
-                img.SaveAsJpeg(stream, new JpegEncoder() { Quality = quality });
+                img.SaveAsJpeg(stream, new JpegEncoder());
             }
         }
 
-        public static async Task GetAssociatedImageAsJpegToStreamAsync(this OpenSlideImage image, string name, Stream stream, int quality = 75)
+        public static async Task GetAssociatedImageAsJpegToStreamAsync(this OpenSlideImage image, string name, Stream stream)
         {
             using (var img = WriteImage(image, name))
             {
@@ -89,7 +89,7 @@ namespace OpenSlideNET
                 {
                     using (var ms = new MemoryStream(buffer))
                     {
-                        img.SaveAsJpeg(ms, new JpegEncoder() { Quality = quality });
+                        img.SaveAsJpeg(ms, new JpegEncoder());
                         ms.SetLength(ms.Position);
                         ms.Position = 0;
                         await ms.CopyToAsync(stream).ConfigureAwait(false);

@@ -4,7 +4,13 @@
     <PackageId>OpenSlideNET.ImageExtensions</PackageId>
     <Title>OpenSlideNET.ImageExtensions</Title>
     <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
-    <Description>.NET bindings for OpenSlide with Deep Zoom support.</Description>
+    <Description>.NET bindings for OpenSlide with Deep Zoom support written by YiGolden.
+Customised for dependencies removed for Native Stubs to allow installation in older .net codebase</Description>
+    <Version>1.0.0-beta1-20190807</Version>
+    <Authors>Conor Vahland</Authors>
+    <Company>Conor Vahland</Company>
+    <RepositoryUrl>https://github.com/conorvahland/OpenSlideNET.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/conorvahland/OpenSlideNET</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>

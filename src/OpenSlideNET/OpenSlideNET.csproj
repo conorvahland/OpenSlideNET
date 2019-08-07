@@ -4,15 +4,20 @@
     <PackageId>OpenSlideNET</PackageId>
     <Title>OpenSlideNET</Title>
     <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
-    <Description>.NET bindings for OpenSlide.</Description>
+    <Description>.NET bindings for OpenSlide written by YiGolden.
+Customised for dependencies removed for Native Stubs to allow installation in older .net codebase</Description>
+    <Version>1.0.0-beta1-20190807</Version>
+    <Authors>Conor Vahland</Authors>
+    <RepositoryUrl>https://github.com/conorvahland/OpenSlideNET.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/conorvahland/OpenSlideNET</PackageProjectUrl>
   </PropertyGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
   
-  <ItemGroup>
+  <!-- <ItemGroup>
     <PackageReference Include="OpenSlideNET.NativeStubs" Version="1.0.0-preview4-18080601" />
-  </ItemGroup>
+  </ItemGroup> -->
 
 </Project>

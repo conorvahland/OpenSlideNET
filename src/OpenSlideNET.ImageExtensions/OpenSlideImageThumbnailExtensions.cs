@@ -69,7 +69,7 @@ namespace OpenSlideNET
             return output;
         }
 
-        public static byte[] GetThumbnailAsJpeg(this OpenSlideImage image, int maxSize, int quality = 75)
+        public static byte[] GetThumbnailAsJpeg(this OpenSlideImage image, int maxSize)
         {
             using (var thumbnail = GenerateThumbnail(image, maxSize, maxSize))
             {
@@ -78,7 +78,7 @@ namespace OpenSlideNET
                 {
                     using (var ms = new MemoryStream(buffer))
                     {
-                        thumbnail.SaveAsJpeg(ms, new JpegEncoder() { Quality = quality });
+                        thumbnail.SaveAsJpeg(ms, new JpegEncoder());
                         ms.SetLength(ms.Position);
                         return ms.ToArray();
                     }
@@ -90,7 +90,7 @@ namespace OpenSlideNET
             }
         }
 
-        public static void GetThumbnailAsJpegToStream(this OpenSlideImage image, int maxSize, Stream stream, int quality = 75)
+        public static void GetThumbnailAsJpegToStream(this OpenSlideImage image, int maxSize, Stream stream)
         {
             using (var thumbnail = GenerateThumbnail(image, maxSize, maxSize))
             {
@@ -99,7 +99,7 @@ namespace OpenSlideNET
                 {
                     using (var ms = new MemoryStream(buffer))
                     {
-                        thumbnail.SaveAsJpeg(ms, new JpegEncoder() { Quality = quality });
+                        thumbnail.SaveAsJpeg(ms, new JpegEncoder());
                         ms.SetLength(ms.Position);
                         ms.Position = 0;
                         ms.CopyTo(stream);
@@ -112,14 +112,14 @@ namespace OpenSlideNET
             }
         }
 
-        public static void GetThumbnailAsJpegToStream(this OpenSlideImage image, int maxSize, MemoryStream stream, int quality = 75)
+        public static void GetThumbnailAsJpegToStream(this OpenSlideImage image, int maxSize, MemoryStream stream)
         {
             using (var thumbnail = GenerateThumbnail(image, maxSize, maxSize))
             {
                 byte[] buffer = ArrayPool<byte>.Shared.Rent(EnsureMinimumSize(maxSize * maxSize * 4 * 2));
                 try
                 {
-                    thumbnail.SaveAsJpeg(stream, new JpegEncoder() { Quality = quality });
+                    thumbnail.SaveAsJpeg(stream, new JpegEncoder());
                 }
                 finally
                 {
@@ -128,7 +128,7 @@ namespace OpenSlideNET
             }
         }
 
-        public static async Task GetThumbnailAsJpegToStreamAsync(this OpenSlideImage image, int maxSize, Stream stream, int quality = 75)
+        public static async Task GetThumbnailAsJpegToStreamAsync(this OpenSlideImage image, int maxSize, Stream stream)
         {
             using (var thumbnail = GenerateThumbnail(image, maxSize, maxSize))
             {
@@ -137,7 +137,7 @@ namespace OpenSlideNET
                 {
                     using (var ms = new MemoryStream(buffer))
                     {
-                        thumbnail.SaveAsJpeg(ms, new JpegEncoder() { Quality = quality });
+                        thumbnail.SaveAsJpeg(ms, new JpegEncoder());
                         ms.SetLength(ms.Position);
                         ms.Position = 0;
                         await ms.CopyToAsync(stream).ConfigureAwait(false);
