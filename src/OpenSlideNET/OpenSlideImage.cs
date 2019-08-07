@@ -73,30 +73,30 @@ namespace OpenSlideNET
             }
         }
 
-        private ImageDimemsions? _dimemsionsCache = null;
-        private void EnsureDimemsionsCached()
+        private ImageDimensions? _dimensionsCache = null;
+        private void EnsureDimensionsCached()
         {
-            if (_dimemsionsCache == null)
+            if (_dimensionsCache == null)
             {
                 Interop.GetLevel0Dimensions(_handle, out long w, out long h);
                 if (w == -1 || h == -1)
                 {
                     ThrowHelper.CheckAndThrowError(_handle);
                 }
-                _dimemsionsCache = new ImageDimemsions(w, h);
+                _dimensionsCache = new ImageDimensions(w, h);
             }
         }
         /// <summary>
         /// A (width, height) tuple for level 0 of the slide.
         /// </summary>
-        public ImageDimemsions Dimemsions
+        public ImageDimensions Dimensions
         {
             get
             {
                 EnsureNotDisposed();
-                EnsureDimemsionsCached();
+                EnsureDimensionsCached();
 
-                return _dimemsionsCache.Value;
+                return _dimensionsCache.Value;
             }
         }
         public long Width
@@ -104,9 +104,9 @@ namespace OpenSlideNET
             get
             {
                 EnsureNotDisposed();
-                EnsureDimemsionsCached();
+                EnsureDimensionsCached();
 
-                return _dimemsionsCache.Value.Width;
+                return _dimensionsCache.Value.Width;
             }
         }
         public long Height
@@ -114,9 +114,9 @@ namespace OpenSlideNET
             get
             {
                 EnsureNotDisposed();
-                EnsureDimemsionsCached();
+                EnsureDimensionsCached();
 
-                return _dimemsionsCache.Value.Height;
+                return _dimensionsCache.Value.Height;
             }
         }
 
@@ -125,7 +125,7 @@ namespace OpenSlideNET
         /// </summary>
         /// <param name="level">the k level</param>
         /// <returns>A (width, height) tuple for level k of the slide.</returns>
-        public ImageDimemsions GetLevelDimemsions(int level)
+        public ImageDimensions GetLevelDimensions(int level)
         {
             EnsureNotDisposed();
 
@@ -134,7 +134,7 @@ namespace OpenSlideNET
             {
                 ThrowHelper.CheckAndThrowError(_handle);
             }
-            return new ImageDimemsions(w, h);
+            return new ImageDimensions(w, h);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace OpenSlideNET
             }
         }
 
-        public string ObjectiveColor
+        public string ObjectivePower
         {
             get
             {
@@ -319,14 +319,14 @@ namespace OpenSlideNET
             return associatedImages;
         }
 
-        public bool TryGetAssociatedImageDimemsions(string name, out ImageDimemsions dims)
+        public bool TryGetAssociatedImageDimensions(string name, out ImageDimensions dims)
         {
             EnsureNotDisposed();
 
-            Interop.GetAssociatedImageDimemsions(_handle, name, out long w, out long h);
+            Interop.GetAssociatedImageDimensions(_handle, name, out long w, out long h);
             if (w != -1 && h != -1)
             {
-                dims = new ImageDimemsions(w, h);
+                dims = new ImageDimensions(w, h);
                 return true;
             }
 
@@ -334,16 +334,16 @@ namespace OpenSlideNET
             return false;
         }
 
-        public unsafe byte[] ReadAssociatedImage(string name, out ImageDimemsions dimemsions)
+        public unsafe byte[] ReadAssociatedImage(string name, out ImageDimensions dimensions)
         {
             EnsureNotDisposed();
 
-            if (!TryGetAssociatedImageDimemsions(name, out dimemsions))
+            if (!TryGetAssociatedImageDimensions(name, out dimensions))
             {
                 throw new KeyNotFoundException();
             }
 
-            var data = new byte[dimemsions.Width * dimemsions.Height * 4];
+            var data = new byte[dimensions.Width * dimensions.Height * 4];
             if (data.Length > 0)
             {
                 fixed (void* pdata = &data[0])
@@ -425,7 +425,7 @@ namespace OpenSlideNET
         }
 
 
-        public readonly struct ImageDimemsions
+        public readonly struct ImageDimensions
         {
             private readonly long _width;
             private readonly long _height;
@@ -433,7 +433,7 @@ namespace OpenSlideNET
             public long Width => _width;
             public long Height => _height;
 
-            public ImageDimemsions(long width, long height)
+            public ImageDimensions(long width, long height)
             {
                 _width = width;
                 _height = height;
@@ -445,14 +445,14 @@ namespace OpenSlideNET
                 height = _height;
             }
 
-            public static implicit operator (long Width, long Height) (ImageDimemsions dimemsions)
+            public static implicit operator (long Width, long Height) (ImageDimensions dimensions)
             {
-                return (Width: dimemsions._width, Height: dimemsions._height);
+                return (Width: dimensions._width, Height: dimensions._height);
             }
 
-            public static explicit operator ImageDimemsions(ValueTuple<long, long> dimemsions)
+            public static explicit operator ImageDimensions(ValueTuple<long, long> dimensions)
             {
-                return new ImageDimemsions(dimemsions.Item1, dimemsions.Item2);
+                return new ImageDimensions(dimensions.Item1, dimensions.Item2);
             }
         }
 

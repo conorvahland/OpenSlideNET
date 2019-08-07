@@ -19,7 +19,7 @@ namespace OpenSlideNET
 
         private static Image<Bgra32> WriteImage(OpenSlideImage image, string name)
         {
-            if (!image.TryGetAssociatedImageDimemsions(name, out var dims))
+            if (!image.TryGetAssociatedImageDimensions(name, out var dims))
             {
                 throw new KeyNotFoundException();
             }

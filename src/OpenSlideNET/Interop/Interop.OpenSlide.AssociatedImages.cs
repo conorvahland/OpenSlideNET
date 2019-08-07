@@ -29,7 +29,7 @@ namespace OpenSlideNET
         }
 
         [DllImport(LibOpenSlide, EntryPoint = "openslide_get_associated_image_dimensions", CallingConvention = CallingConvention.Cdecl)]
-        private static extern void GetAssociatedImageDimemsions_Internal(IntPtr osr, IntPtr name, out long w, out long h);
+        private static extern void GetAssociatedImageDimensions_Internal(IntPtr osr, IntPtr name, out long w, out long h);
 
         /// <summary>
         /// Get the dimensions of an associated image. 
@@ -39,13 +39,13 @@ namespace OpenSlideNET
         /// <param name="name">The name of the desired associated image. Must be a valid name as given by openslide_get_associated_image_names(). </param>
         /// <param name="w">The width of the associated image, or -1 if an error occurred. </param>
         /// <param name="h">The height of the associated image, or -1 if an error occurred. </param>
-        internal static unsafe void GetAssociatedImageDimemsions(IntPtr osr, string name, out long w, out long h)
+        internal static unsafe void GetAssociatedImageDimensions(IntPtr osr, string name, out long w, out long h)
         {
             byte* pointer = stackalloc byte[64];
             UnsafeUtf8Encoder utf8Encoder = new UnsafeUtf8Encoder(pointer, 64);
             try
             {
-                GetAssociatedImageDimemsions_Internal(osr, utf8Encoder.Encode(name), out w, out h);
+                GetAssociatedImageDimensions_Internal(osr, utf8Encoder.Encode(name), out w, out h);
             }
             finally
             {
